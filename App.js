@@ -19,6 +19,10 @@ import {
   CardItem,
   Thumbnail,
 } from "native-base";
+import ProductCard from "./Components/ProductCard";
+import BottomTab from "./Components/BottomTab";
+import AppBar from "./Components/AppBar"
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -48,73 +52,21 @@ export default class App extends Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Left />
-          <Body>
-            <Title>Groc</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Header searchBar rounded>
-          <Item>
-            <Icon name="ios-search" />
-            <Input placeholder="Search products" />
-          </Item>
-        </Header>
+        <AppBar/>
         <Content>
           {this.state.products.map((product, i) => {
             return (
-              <Card>
-                <CardItem>
-                  <Left>
-                    <Thumbnail source={{ uri: product.image }} />
-                    <Body>
-                      <Text>{product.name}</Text>
-                      <Text note>
-                        Price:{product.price}/{product.quantity}
-                        {product.unit}
-                      </Text>
-                    </Body>
-                  </Left>
-                </CardItem>
-                <CardItem>
-                  <Left>
-                    <Button transparent>
-                      <Text>Add To Cart</Text>
-                    </Button>
-                  </Left>
-                  <Body>
-                    <Button transparent>
-                      <Icon active name="chatbubbles" />
-                      <Text>4 Comments</Text>
-                    </Button>
-                  </Body>
-                  <Right>
-                  <Button transparent>
-                      <Text>Add To Cart</Text>
-                    </Button>
-                  </Right>
-                </CardItem>
-              </Card>
+              <ProductCard
+                image={product.image}
+                name={product.name}
+                price={product.price}
+                quantity={product.quantity}
+                unit={product.unit}
+              />
             );
           })}
         </Content>
-        <Footer>
-          <FooterTab>
-            <Button vertical>
-              <Icon name="apps" />
-              <Text>Home</Text>
-            </Button>
-            <Button vertical>
-              <Icon name="camera" />
-              <Text>Orders</Text>
-            </Button>
-            <Button vertical>
-              <Icon name="navigate" />
-              <Text>Profile</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
+        <BottomTab/>
       </Container>
     );
   }
