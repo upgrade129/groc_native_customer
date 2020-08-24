@@ -23,7 +23,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import ProductCard from "../Components/ProductCard";
+import OrderCard from "../Components/OrderCard";
 import BottomTab from "../Components/BottomTab";
 import AppBar from "../Components/AppBar"
 
@@ -58,18 +58,15 @@ export default class Orders extends Component {
       <Container>
         <AppBar placeholder="Search Orders"/>
         <Content>
-          {/* {this.state.orders.map((product, i) => {
+          {this.state.orders.map((order, i) => {
             return (
-              <ProductCard
-                image={product.image}
-                name={product.name}
-                price={product.price}
-                quantity={product.quantity}
-                unit={product.unit}
+              <OrderCard
+              estimated_price={order.estimated_price}
+              ordered_items={order.ordered_items}
+              shop_id={order.shop_id}
               />
             );
-          })} */}
-          <Text>Welcome to Orders!</Text>
+          })}
         </Content>
         <BottomTab navigation={this.props.navigation}/>
       </Container>
