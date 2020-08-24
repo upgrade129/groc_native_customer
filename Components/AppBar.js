@@ -34,7 +34,7 @@ export default function AppBar(props) {
       <Header searchBar rounded>
         <Item>
           <Icon name="ios-search" />
-          <Input placeholder="Search products" />
+          <Input placeholder={props.placeholder} />
         </Item>
       </Header>
     </View>

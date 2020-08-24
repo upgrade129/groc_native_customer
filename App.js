@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "react-native-gesture-handler";
 import {
   Container,
   Header,
@@ -19,9 +20,16 @@ import {
   CardItem,
   Thumbnail,
 } from "native-base";
-import ProductCard from "./Components/ProductCard";
-import BottomTab from "./Components/BottomTab";
-import AppBar from "./Components/AppBar"
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import Home from "./Pages/Home";
+import Orders from "./Pages/Orders";
+import Profile from "./Pages/Profile";
+
+import AppBar from "./Components/AppBar";
+
+const Stack = createStackNavigator();
 
 export default class App extends Component {
   constructor(props) {
@@ -30,10 +38,11 @@ export default class App extends Component {
     this.state = {
       products: [],
     };
+    const Stack = createStackNavigator();
   }
   componentWillMount() {
     // It's best to use your api call on componentWillMount
-    this.getProducts();
+    // this.getProducts();
   }
 
   getProducts() {
@@ -51,23 +60,17 @@ export default class App extends Component {
 
   render() {
     return (
-      <Container>
-        <AppBar/>
-        <Content>
-          {this.state.products.map((product, i) => {
-            return (
-              <ProductCard
-                image={product.image}
-                name={product.name}
-                price={product.price}
-                quantity={product.quantity}
-                unit={product.unit}
-              />
-            );
-          })}
-        </Content>
-        <BottomTab/>
-      </Container>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Orders" component={Orders} />
+          <Stack.Screen name="Profile" component={Profile} />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 }

@@ -20,23 +20,35 @@ import {
   Thumbnail,
 } from "native-base";
 
-export default function BottomTab(props) {
+export default function BottomTab({navigation}) {
   return (
     <Footer>
-          <FooterTab>
-            <Button vertical>
-              <Icon name="apps" />
-              <Text>Home</Text>
-            </Button>
-            <Button vertical>
-              <Icon name="camera" />
-              <Text>Orders</Text>
-            </Button>
-            <Button vertical>
-              <Icon name="navigate" />
-              <Text>Profile</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
+      <FooterTab>
+        <Button
+          vertical
+          title="Go to Jane's profile"
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Icon name="apps" />
+          <Text>Home</Text>
+        </Button>
+        <Button
+          vertical
+          title="Go to Jane's profile"
+          onPress={() => navigation.navigate("Orders")}
+        >
+          <Icon name="camera" />
+          <Text>Orders</Text>
+        </Button>
+        <Button
+          vertical
+          title="Go to Jane's profile"
+          onPress={() => navigation.navigate("Profile")}
+        >
+          <Icon name="navigate" />
+          <Text>Profile</Text>
+        </Button>
+      </FooterTab>
+    </Footer>
   );
 }
