@@ -26,6 +26,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./Pages/Home";
 import Orders from "./Pages/Orders";
 import Profile from "./Pages/Profile";
+import Signin from "./Pages/Signin";
+import Signup from "./Pages/Signup";
 
 import AppBar from "./Components/AppBar";
 
@@ -66,9 +68,11 @@ export default class App extends Component {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Orders" component={Orders} />
           <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="Signup" component={Signup} />
         </Stack.Navigator>
       </NavigationContainer>
     );
