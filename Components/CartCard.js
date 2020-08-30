@@ -20,9 +20,9 @@ import {
   Thumbnail,
 } from "native-base";
 
-export default function ProductCard(props) {
+export default function CartCard(props) {
   return (
-    <Card key={props.name}>
+    <Card>
       <CardItem>
         <Left>
           <Thumbnail source={{ uri: props.image }} />
