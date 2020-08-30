@@ -3,6 +3,13 @@ import { Container, Header, Content, Button, Text , Form, Item, Input, Label , L
 import axios from 'axios';
 
 export default class ButtonBlockExample extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            email:"",
+            pass:""
+        };
+    }
   render() {
     return (
       <Container>
@@ -17,32 +24,37 @@ export default class ButtonBlockExample extends Component {
         <Form>
             <Item inlineLabel>
               <Label>Username</Label>
-              <Input id="email"/>
+              <Input onChangeText={(text)=>this.setState({email:text})}/>
             </Item>
             <Item inlineLabel last>
               <Label>Password</Label>
-              <Input id="password"/>
+              <Input onChangeText={(text)=>this.setState({pass:text})}/>
             </Item>
           </Form>
         
           <Button block success onPress={() => {
               
-              var pass = document.getElementById("password").value;
-              var user = document.getElementById("email").value;
-              console.log("email",user);
-              console.log("pass",pass);
+             console.log("username",this.state.email);
               axios
               .post('https://groc-api.herokuapp.com/auth/local', {
-                identifier: user,
-                password: pass,
+                identifier: this.state.email,
+                password: this.state.pass,
               })
               .then(response => {
                 // Handle success.
                 console.log('Well done!');
                 console.log('User profile', response.data.user);
                 console.log('User token', response.data.jwt);
-                localStorage.setItem("user",response.data.user);
-                localStorage.setItem("jwt",response.data.jwt);
+                async()=>{
+                try {
+                    const jsonValue = JSON.stringify(response.data.user);
+                    await AsyncStorage.setItem('@userdata', jsonValue)
+                    await AsyncStorage.setItem('@jwt', response.data.jwt);
+                    console.log("Data stored");
+                  } catch (e) {
+                    // saving error
+                  }
+                }
                 this.props.navigation.navigate('Home');
      
                 // this.props.history.push("/new/url")
@@ -51,6 +63,7 @@ export default class ButtonBlockExample extends Component {
               .catch(error => {
                 // Handle error.
                 console.log('An error occurred:', error.response);
+                this.props.navigation.navigate('Home');
                 
                 
               });
@@ -63,7 +76,7 @@ export default class ButtonBlockExample extends Component {
             <Text>SIGN UP</Text>
           </Button>
       
-      <Button bodered danger>
+      <Button bodered danger onPress={(e)=>this.props.navigation.navigate('forgetpass')}>
             <Text>FORGET pass</Text>
           </Button>
           </Content>

@@ -37,9 +37,20 @@ export default function ProductCard(props) {
       </CardItem>
       <CardItem>
         <Left>
-          <Button transparent>
-            <Text>Add To Cart</Text>
+          <Left>
+          <Button bordered small primary>
+          <Icon name='arrow-up' />
           </Button>
+          </Left>
+          <Body>
+          <Input value="0"/>
+          </Body>
+          <Right>
+          <Button bordered small primary>
+          <Icon name='arrow-down' />
+          </Button>
+          </Right>
+
         </Left>
         <Body>
           <Button transparent>
