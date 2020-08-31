@@ -1,25 +1,5 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Footer,
-  FooterTab,
-  Button,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Text,
-  Item,
-  Input,
-  Segment,
-  Card,
-  CardItem,
-  Thumbnail,
-  View,
-} from "native-base";
+import {  Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,  CardItem,  Thumbnail,  View,} from "native-base";
 
 export default function AppBar(props) {
   return (
