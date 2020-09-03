@@ -1,30 +1,9 @@
 import React, { Component } from "react";
 import "react-native-gesture-handler";
-import {
-  Container,
-  Header,
-  Title,
-  Content,
-  Footer,
-  FooterTab,
-  Button,
-  Left,
-  Right,
-  Body,
-  Icon,
-  Text,
-  Item,
-  Input,
-  Segment,
-  Card,
-  CardItem,
-  Thumbnail,
-} from "native-base";
+import {  Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,  CardItem,  Thumbnail,} from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from '@react-native-community/async-storage';
-
-
 import Home from "./Pages/Home";
 import CartStackScreen from "./Pages/Cart";
 import Orders from "./Pages/Orders";
