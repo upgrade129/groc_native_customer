@@ -33,6 +33,7 @@ export default class Home extends Component {
     // Initialize empty state here
     this.state = {
       products: [],
+      selected_products:[]
     };
   }
   componentWillMount() {
@@ -53,6 +54,11 @@ export default class Home extends Component {
       });
   }
 
+  getselected_items(val){
+      // vicky add ur code here
+       console.log("sucessfully added",val);
+  }
+
   render() {
     return (
       <Container>
@@ -66,6 +72,8 @@ export default class Home extends Component {
                 price={product.price}
                 quantity={product.quantity}
                 unit={product.unit}
+                id={product.id}
+                added_items={this.getselected_items}
               />
             );
           })}
