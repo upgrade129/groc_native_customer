@@ -6,7 +6,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ProductCard from "../Components/ProductCard";
 import BottomTab from "../Components/BottomTab";
-import AppBar from "../Components/AppBar"
+import AppBar from "../Components/AppBar";
+import AsyncStorage from '@react-native-community/async-storage';
+
+
+var list=[];
 
 export default class Home extends Component {
   constructor(props) {
@@ -17,6 +21,17 @@ export default class Home extends Component {
       selected_products:[]
     };
   }
+
+  storelist=async(list)=>{
+    try {
+        const jsonValue = JSON.stringify(list);
+        await AsyncStorage.setItem('local', jsonValue)
+        console.log("a stored");
+      } catch (e) {
+        // saving error
+      }
+    }
+  
   componentWillMount() {
     // It's best to use your api call on componentWillMount
     this.getProducts();
@@ -36,8 +51,8 @@ export default class Home extends Component {
   }
 
   getselected_items(val){
-      // vicky add ur code here
-       console.log("sucessfully added",val);
+      list.push(val);
+       console.log("sucessfully added",list);
   }
 
   render() {
@@ -59,7 +74,50 @@ export default class Home extends Component {
             );
           })}
         </Content>
-        <BottomTab navigation={this.props.navigation}/>
+        <Footer>
+      <FooterTab>
+        <Button
+          vertical
+          title="Go to Home"
+          onPress={() => this.props.navigation.navigate("Home")}
+        >
+          <Icon type="FontAwesome" name="home" />
+          <Text>Home</Text>
+        </Button>
+        <Button
+          vertical
+          title="Go to Cart"
+          onPress={() => {
+            this.props.navigation.navigate('Cart');
+            console.log("bottomTab",list);
+            // localStorage.setItem("local",JSON.stringify(list));
+            this.storelist(list);
+            
+            
+          }}
+        >
+        <Icon type="FontAwesome" name="shopping-cart" />
+          <Text>Cart</Text>
+        </Button>
+        <Button
+          vertical
+          title="Go to Orders"
+          onPress={() => this.props.navigation.navigate("Orders")}
+        >
+        <Icon type="FontAwesome" name="history" />
+          <Text>Orders</Text>
+        </Button>
+        <Button
+          vertical
+          title="Go to Profile"
+          onPress={() => this.props.navigation.navigate("Profile")}
+        >
+          <Icon type="FontAwesome" name="user" />
+          <Text>Profile</Text>
+        </Button>
+      </FooterTab>
+    </Footer>
+
       </Container>
     );
   }

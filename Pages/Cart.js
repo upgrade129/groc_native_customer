@@ -10,80 +10,84 @@ import ShopCard from "../Components/ShopCard";
 import BottomTab from "../Components/BottomTab";
 import AppBar from "../Components/AppBar";
 
-const data = {
-  shop_product_id_array: [
-    {
-      shop_id: "5f3630a5fee41a005ff2d047",
-      available_products: [
-        {
-          id: "5f317f6227b9d004ac3313b2",
-          price: 23,
-        },
-        {
-          id: "5f317fc627b9d004ac3313b3",
-          price: 60,
-        },
-        {
-          id: "5f31801227b9d004ac3313b4",
-          price: 50,
-        },
-      ],
-      shop_score: 3,
-    },
-    {
-      shop_id: "5f392e2a7b25630017007fec",
-      available_products: [
-        {
-          id: "5f317f6227b9d004ac3313b2",
-          price: 23,
-        },
-        {
-          id: "5f31801227b9d004ac3313b4",
-          price: 50,
-        },
-      ],
-      shop_score: 2,
-    },
-    {
-      shop_id: "5f393a820afaa700f8545c98",
-      available_products: [
-        {
-          id: "5f317f6227b9d004ac3313b2",
-          price: 23,
-        },
-        {
-          id: "5f317fc627b9d004ac3313b3",
-          price: 60,
-        },
-      ],
-      shop_score: 2,
-    },
-  ],
-  product_id_array: [
-    "5f317f6227b9d004ac3313b2",
-    "5f317fc627b9d004ac3313b3",
-    "5f31801227b9d004ac3313b4",
-  ],
-};
+
+//   shop_product_id_array: [
+//     {
+//       shop_id: "5f3630a5fee41a005ff2d047",
+//       available_products: [
+//         {
+//           id: "5f317f6227b9d004ac3313b2",
+//           price: 23,
+//         },
+//         {
+//           id: "5f317fc627b9d004ac3313b3",
+//           price: 60,
+//         },
+//         {
+//           id: "5f31801227b9d004ac3313b4",
+//           price: 50,
+//         },
+//       ],
+//       shop_score: 3,
+//     },
+//     {
+//       shop_id: "5f392e2a7b25630017007fec",
+//       available_products: [
+//         {
+//           id: "5f317f6227b9d004ac3313b2",
+//           price: 23,
+//         },
+//         {
+//           id: "5f31801227b9d004ac3313b4",
+//           price: 50,
+//         },
+//       ],
+//       shop_score: 2,
+//     },
+//     {
+//       shop_id: "5f393a820afaa700f8545c98",
+//       available_products: [
+//         {
+//           id: "5f317f6227b9d004ac3313b2",
+//           price: 23,
+//         },
+//         {
+//           id: "5f317fc627b9d004ac3313b3",
+//           price: 60,
+//         },
+//       ],
+//       shop_score: 2,
+//     },
+//   ],
+//   product_id_array: [
+//     "5f317f6227b9d004ac3313b2",
+//     "5f317fc627b9d004ac3313b3",
+//     "5f31801227b9d004ac3313b4",
+//   ],
+// };
 
 class Cart extends Component {
   constructor(props) {
     super(props);
+    
     // Initialize empty state here
     this.state = {
       cart_items: null,
+      data:[],
+      
     };
   }
   componentWillMount() {
     this.getData();
+    
   }
 
   getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem("@cart_items");
-      const data = jsonValue != null ? JSON.parse(jsonValue) : null;
+      const jsonValue = await AsyncStorage.getItem("local");
+      this.state.data = jsonValue != null ? JSON.parse(jsonValue) : null;
       this.setState({
-        cart_items: data,
+        cart_items: this.state.data,
       });
       // console.log("Data Set");
       console.log(jsonValue);
