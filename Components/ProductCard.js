@@ -81,15 +81,15 @@ export default class PickerPlaceholderExample extends Component {
             <Right>
               <Button transparent onPress={()=>{
                 console.log("selected",this.state.selected);
-                this.state.item_added = {
+                var data= {
                   "image": this.state.image,
                   "name": this.state.name,
                   "price": this.state.price,
                   "id": this.state.id,
                   "quantity": this.state.selected
                 }
-                console.log("selected-items",this.state.item_added);
-                this.state.addtocart(this.state.item_added);
+                // console.log("selected-items",this.state.item_added);
+                this.state.addtocart(data);
             }}>
                 <Text>Add To Cart</Text>
               </Button>

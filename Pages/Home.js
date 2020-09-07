@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import {  Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card, Form, CardItem,  Thumbnail,} from "native-base";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import ProductCard from "../Components/ProductCard";
 import BottomTab from "../Components/BottomTab";
 import AppBar from "../Components/AppBar"
@@ -22,6 +22,21 @@ export default class Home extends Component {
     this.getProducts();
   }
 
+  updateData = async (value) => {
+    try {
+      var cart_items = await AsyncStorage.getItem('@cart_items')
+      cart_items=JSON.parse(cart_items);
+      const jsonValue = JSON.stringify(value)
+      cart_items.push(jsonValue);
+      cart_items=JSON.stringify(cart_items);
+      await AsyncStorage.setItem('@cart_items', cart_items)
+      console.log("Data stored");
+    } catch (e) {
+      // saving error
+      console.log(e)
+    }
+  }
+
   getProducts() {
     fetch("https://groc-api.herokuapp.com/products")
       .then((response) => response.json())
@@ -37,7 +52,23 @@ export default class Home extends Component {
 
   getselected_items(val){
       // vicky add ur code here
-       console.log("sucessfully added",val);
+      // this.setState({ selected_products: [...this.state.selected_products, JSON.stringify(val)] }) //simple value
+
+      // this.setState(prevState => ({
+      //   selected_products: [...prevState.selected_products, JSON.stringify(val)]
+      // }))
+      var oldarr=this.state.selected_products;
+
+
+      console.log(oldarr)
+      // console.log(val)
+      // oldarr.push(JSON.stringify(val))
+      // // console.log(this.state.selected_products)
+      // this.setState({ selected_products: oldarr })
+
+      // this.updateData(val)
+      console.log(val)
+      // console.log(val)
   }
 
   render() {
@@ -64,3 +95,4 @@ export default class Home extends Component {
     );
   }
 }
+

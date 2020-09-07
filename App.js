@@ -33,7 +33,7 @@ export default class App extends Component {
     fetch("https://groc-api.herokuapp.com/products")
       .then((response) => response.json())
       .then((responseJson) => {
-        this.storeData(responseJson);
+        // this.storeData([]);
       })
       .catch((error) => {
         console.error(error);
