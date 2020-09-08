@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {   Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,Form,Picker,  CardItem,  Thumbnail,} from "native-base";
+import {   Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,  CardItem,  Thumbnail,Form,Picker} from "native-base";
 
 export default class PickerPlaceholderExample extends Component {
   constructor(props) {

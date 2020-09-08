@@ -16,20 +16,9 @@ export default function CartCard(props) {
         </Left>
       </CardItem>
       <CardItem>
-        <Left>
-          <Button transparent>
-            <Text>Add To Cart</Text>
-          </Button>
-        </Left>
-        <Body>
-          <Button transparent>
-            <Icon active name="chatbubbles" />
-            <Text>4 Comments</Text>
-          </Button>
-        </Body>
         <Right>
           <Button transparent>
-            <Text>Add To Cart</Text>
+            <Text>Remove From Cart</Text>
           </Button>
         </Right>
       </CardItem>

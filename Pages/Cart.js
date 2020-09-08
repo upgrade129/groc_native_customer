@@ -1,6 +1,26 @@
 import React, { Component } from "react";
 import "react-native-gesture-handler";
-import {  Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,  CardItem,  Thumbnail,} from "native-base";
+import axios from "axios";
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
+  Left,
+  Right,
+  Body,
+  Icon,
+  Text,
+  Item,
+  Input,
+  Segment,
+  Card,
+  CardItem,
+  Thumbnail,
+} from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -10,83 +30,52 @@ import ShopCard from "../Components/ShopCard";
 import BottomTab from "../Components/BottomTab";
 import AppBar from "../Components/AppBar";
 
-const data = {
-  shop_product_id_array: [
-    {
-      shop_id: "5f3630a5fee41a005ff2d047",
-      available_products: [
-        {
-          id: "5f317f6227b9d004ac3313b2",
-          price: 23,
-        },
-        {
-          id: "5f317fc627b9d004ac3313b3",
-          price: 60,
-        },
-        {
-          id: "5f31801227b9d004ac3313b4",
-          price: 50,
-        },
-      ],
-      shop_score: 3,
-    },
-    {
-      shop_id: "5f392e2a7b25630017007fec",
-      available_products: [
-        {
-          id: "5f317f6227b9d004ac3313b2",
-          price: 23,
-        },
-        {
-          id: "5f31801227b9d004ac3313b4",
-          price: 50,
-        },
-      ],
-      shop_score: 2,
-    },
-    {
-      shop_id: "5f393a820afaa700f8545c98",
-      available_products: [
-        {
-          id: "5f317f6227b9d004ac3313b2",
-          price: 23,
-        },
-        {
-          id: "5f317fc627b9d004ac3313b3",
-          price: 60,
-        },
-      ],
-      shop_score: 2,
-    },
-  ],
-  product_id_array: [
-    "5f317f6227b9d004ac3313b2",
-    "5f317fc627b9d004ac3313b3",
-    "5f31801227b9d004ac3313b4",
-  ],
-};
-
+var shop_array=null;
 class Cart extends Component {
   constructor(props) {
     super(props);
+
     // Initialize empty state here
     this.state = {
       cart_items: null,
+      data: [],
     };
   }
   componentWillMount() {
     this.getData();
   }
 
+  storeShopArray=async(list)=>{
+    try {
+        const jsonValue = JSON.stringify(list);
+        await AsyncStorage.setItem('shopArray', jsonValue)
+        console.log("a stored");
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
   getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem("@cart_items");
-      const data = jsonValue != null ? JSON.parse(jsonValue) : null;
+      const jsonValue = await AsyncStorage.getItem("local");
+      var parsedJson = jsonValue != null ? JSON.parse(jsonValue) : null;
       this.setState({
-        cart_items: data,
+        cart_items: parsedJson,
       });
       // console.log("Data Set");
-      console.log(jsonValue);
+      console.log(parsedJson);
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+
+
+  getStoreData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("shopArray");
+      var parsedJson = jsonValue != null ? JSON.parse(jsonValue) : null;
+      return parsedJson;
     } catch (e) {
       // error reading value
     }
@@ -117,41 +106,11 @@ class Cart extends Component {
           full
           success
           onPress={() => {
-            var data = {
-              ordered_items: this.state.cart_items,
-            };
-            fetch("http://groc-api.herokuapp.com/find-best-shop", {
-              method: "post",
-              mode: "no-cors", // no-cors, *cors, same-origin
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                ordered_items: this.state.cart_items,
-              }),
-            })
-              .then(function (response) {
-                return response.json();
-              })
-              .then(function (responseData) {
-                console.log(responseData);
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-            console.log(
-              JSON.stringify({
-                ordered_items: this.state.cart_items,
-              })
-            );
-            this.props.navigation.navigate("Details");
+              this.props.navigation.navigate("SelectShop");
           }}
-          title="Open Modal"
-        >
+          title="Open Modal">
           <Text>Check Out</Text>
         </Button>
-
         <BottomTab navigation={this.props.navigation} />
       </Container>
     );
@@ -159,19 +118,15 @@ class Cart extends Component {
 }
 
 function ModalScreen({ navigation }) {
+  
   //TODO list shops in this modal
   return (
     <Container>
       {/* <Text>{this.state.cart_items}</Text> */}
       <Content>
-      {data.shop_product_id_array.map((shop, i) => {
-        return (
-          <ShopCard
-          shop_id={shop.shop_id}
-          shop_score={shop.shop_score}
-          />
-        );
-      })}
+        {shop_array.map((shop, i) => {
+          return <ShopCard shop_id="jn" shop_score={shop.shop_score} />;
+        })}
       </Content>
       <Button full dark onPress={() => navigation.goBack()}>
         <Text>Go back</Text>
@@ -193,3 +148,46 @@ export default function CartStackScreen() {
     </MainStack.Navigator>
   );
 }
+
+
+// var data = {
+            //   ordered_items: [
+            //     {
+            //       image:
+            //         "https://res.cloudinary.com/sivadass/image/upload/v1493620046/dummy-products/carrots.jpg",
+            //       name: "Carrot",
+            //       price: 20,
+            //       id: "5f317f6227b9d004ac3313b2",
+            //       quantity: 3,
+            //     },
+            //     {
+            //       image:
+            //         "https://res.cloudinary.com/sivadass/image/upload/v1493620045/dummy-products/cashews.jpg",
+            //       name: "Cashews ",
+            //       price: 30,
+            //       id: "5f317fc627b9d004ac3313b3",
+            //       quantity: 2,
+            //     },
+            //   ],
+            // };
+
+
+
+            // fetch("http://localhost:1337/find-best-shop", {
+            //   method: "post",
+            //   // mode: "no-cors", // no-cors, *cors, same-origin
+            //   headers: {
+            //     Accept: "application/json",
+            //     "Content-Type": "application/json",
+            //   },
+            //   body: data,
+            // })
+            //   .then(function (response) {
+            //     return response.json();
+            //   })
+            //   .then(function (responseData) {
+            //     console.log(responseData);
+            //   })
+            //   .catch((error) => {
+            //     console.error(error);
+            //   });

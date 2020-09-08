@@ -10,6 +10,7 @@ import Orders from "./Pages/Orders";
 import Profile from "./Pages/Profile";
 import Signin from "./Pages/Signin";
 import Signup from "./Pages/Signup";
+import SelectShop from "./Pages/SelectShop";
 
 import AppBar from "./Components/AppBar";
 
@@ -64,6 +65,7 @@ export default class App extends Component {
           <Stack.Screen name="Orders" component={Orders} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="SelectShop" component={SelectShop} />
         </Stack.Navigator>
       </NavigationContainer>
     );

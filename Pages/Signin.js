@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet,TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Button, Text , Form, Item, Input, Label ,Icon ,Card, CardItem, Left, Body, Right, Title, View } from 'native-base';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export default class Signin extends Component {
     constructor(props){
@@ -11,6 +13,27 @@ export default class Signin extends Component {
             pass:""
         };
     }
+
+    storeuserdata = async(value)=>{
+      try {
+          const jsonValue = JSON.stringify(value);
+          await AsyncStorage.setItem('@userdata', jsonValue)
+          console.log("Data stored");
+        } catch (e) {
+          // saving error
+        }
+      }
+
+      storejwt = async(value)=>{
+        try {
+            
+            await AsyncStorage.setItem('@jwt', value);
+            console.log("Data stored");
+          } catch (e) {
+            // saving error
+          }
+        }
+
   render() {
     return (
       <Container style={styles.container}>
@@ -57,16 +80,8 @@ export default class Signin extends Component {
                         console.log('Well done!');
                         console.log('User profile', response.data.user);
                         console.log('User token', response.data.jwt);
-                        async()=>{
-                        try {
-                            const jsonValue = JSON.stringify(response.data.user);
-                            await AsyncStorage.setItem('@userdata', jsonValue)
-                            await AsyncStorage.setItem('@jwt', response.data.jwt);
-                            console.log("Data stored");
-                          } catch (e) {
-                            // saving error
-                          }
-                        }
+                        this.storeuserdata(response.data.user);
+                        this.storejwt(response.data.jwt);
                         this.props.navigation.navigate('Home');
               
                         // this.props.history.push("/new/url")
