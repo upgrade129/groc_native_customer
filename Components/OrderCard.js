@@ -9,7 +9,7 @@ export default function OrderCard(props) {
           <Body>
             <Text>Rupees: {props.estimated_price}</Text>
             <Text note>
-              Total Items: {props.ordered_items.length}
+              {/* Total Items: {props.ordered_items.length} */}
             </Text>
           </Body>
         </Left>

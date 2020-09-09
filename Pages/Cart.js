@@ -29,6 +29,33 @@ import CartCard from "../Components/CartCard";
 import ShopCard from "../Components/ShopCard";
 import BottomTab from "../Components/BottomTab";
 import AppBar from "../Components/AppBar";
+import {
+  
+  View,
+  StyleSheet,
+  Animated,
+  Easing,
+  TouchableOpacity
+} from "react-native";
+import BouncingPreloader from "react-native-bouncing-preloader";
+
+const icons = [
+  "https://www.shareicon.net/data/256x256/2016/05/04/759946_bar_512x512.png",
+  "https://www.shareicon.net/data/256x256/2016/05/04/759908_food_512x512.png",
+  "https://www.shareicon.net/data/256x256/2016/05/04/759956_food_512x512.png",
+  "https://www.shareicon.net/data/256x256/2016/05/04/759954_food_512x512.png",
+  "https://www.shareicon.net/data/256x256/2016/05/04/759906_food_512x512.png",
+  "https://www.shareicon.net/data/256x256/2016/05/04/759921_food_512x512.png"
+];
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff"
+  }
+});
 
 var shop_array=null;
 class Cart extends Component {
@@ -82,38 +109,52 @@ class Cart extends Component {
   };
 
   render() {
-    return (
-      <Container>
-        <Content>
-          {this.state.cart_items ? (
-            this.state.cart_items.map((cart_item, i) => {
-              return (
-                <CartCard
-                  image={cart_item.image}
-                  name={cart_item.name}
-                  price={cart_item.price}
-                  quantity={cart_item.quantity}
-                  unit={cart_item.unit}
-                />
-              );
-            })
-          ) : (
-            <Text>Loading</Text>
-          )}
-        </Content>
-
-        <Button
-          full
-          success
-          onPress={() => {
-              this.props.navigation.navigate("SelectShop");
-          }}
-          title="Open Modal">
-          <Text>Check Out</Text>
-        </Button>
-        <BottomTab navigation={this.props.navigation} />
-      </Container>
-    );
+    if(this.state.cart_items === null){
+      return(
+        <View style={styles.container}>
+        <BouncingPreloader
+          icons={icons}
+          leftDistance={-100}
+          rightDistance={-150}
+          speed={1000}
+        />
+      </View>);
+    }
+    else if(this.state.cart_items.length != null){
+      return (
+        <Container>
+          <Content>
+            {this.state.cart_items ? (
+              this.state.cart_items.map((cart_item, i) => {
+                return (
+                  <CartCard
+                    image={cart_item.image}
+                    name={cart_item.name}
+                    price={cart_item.price}
+                    quantity={cart_item.quantity}
+                    unit={cart_item.unit}
+                  />
+                );
+              })
+            ) : (
+              <Text>Loading</Text>
+            )}
+          </Content>
+  
+          <Button
+            full
+            success
+            onPress={() => {
+                this.props.navigation.navigate("SelectShop");
+            }}
+            title="Open Modal">
+            <Text>Check Out</Text>
+          </Button>
+          <BottomTab navigation={this.props.navigation} />
+        </Container>
+      );
+    }
+    
   }
 }
 

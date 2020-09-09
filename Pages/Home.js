@@ -60,12 +60,7 @@ export default class Home extends Component {
       }
     }
 
-    load(){
-      if(this.state.loading === true){
-       
-       
-      }
-    }
+    
   
   componentWillMount() {
     // It's best to use your api call on componentWillMount
