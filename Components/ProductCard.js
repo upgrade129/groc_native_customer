@@ -14,6 +14,7 @@ export default class PickerPlaceholderExample extends Component {
       id:this.props.id,
       item_added:{},
       addtocart:this.props.added_items,
+      button_text:"Add to cart",
     };
   }
 
@@ -90,8 +91,9 @@ export default class PickerPlaceholderExample extends Component {
                 }
                 // console.log("selected-items",this.state.item_added);
                 this.state.addtocart(data);
+                this.setState({button_text:'Product Added'});
             }}>
-                <Text>Add To Cart</Text>
+                <Text>{this.state.button_text}</Text>
               </Button>
             </Right>
           </CardItem>
@@ -165,8 +167,9 @@ export default class PickerPlaceholderExample extends Component {
                 }
                 console.log("selected-items",this.state.item_added);
                 this.state.addtocart(this.state.item_added);
+                this.setState({button_text:'Product Added'});
             }}>
-                <Text>Add To Cart</Text>
+                <Text>{this.state.button_text}</Text>
               </Button>
             </Right>
           </CardItem>
@@ -236,8 +239,9 @@ export default class PickerPlaceholderExample extends Component {
                 }
                 console.log("selected-items",this.state.item_added);
                 this.state.addtocart(this.state.item_added);
+                this.setState({button_text:'Product Added'});
             }}>
-                <Text>Add To Cart</Text>
+                <Text>{this.state.button_text}</Text>
               </Button>
             </Right>
           </CardItem>
@@ -307,8 +311,9 @@ export default class PickerPlaceholderExample extends Component {
                 }
                 console.log("selected-items",this.state.item_added);
                 this.state.addtocart(this.state.item_added);
+                this.setState({button_text:'Product Added'});
             }}>
-                <Text>Add To Cart</Text>
+                <Text>{this.state.button_text}</Text>
               </Button>
             </Right>
           </CardItem>
