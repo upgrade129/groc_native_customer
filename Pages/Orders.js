@@ -1,99 +1,45 @@
-import React, { Component } from "react";
-import 'react-native-gesture-handler';
-import {  Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,  CardItem,  Thumbnail,} from "native-base";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import OrderCard from "../Components/OrderCard";
+import React, { Component } from 'react';
+import { Container, Header, Tab, Tabs, ScrollableTab, Content ,Button,Icon,Left,Body,Right,Title} from 'native-base';
+import Orders_Accepted from "../Pages/Orders_Accepted";
+import Orders_Rejected from "../Pages/Orders_Rejected";
+import Orders_Pending from "../Pages/Orders_pending";
+import Orders_Cancelled from "../Pages/Orders_cancelled";
+import AppBar from "../Components/AppBar";
 import BottomTab_1 from "../Components/BottomTab_1";
-import AppBar from "../Components/AppBar"
-
-import {
-  
-  View,
-  StyleSheet,
-  Animated,
-  Easing,
-  TouchableOpacity
-} from "react-native";
-import BouncingPreloader from "react-native-bouncing-preloader";
-
-
-
-const icons = [
-  "https://www.shareicon.net/data/256x256/2016/05/04/759946_bar_512x512.png",
-  "https://www.shareicon.net/data/256x256/2016/05/04/759908_food_512x512.png",
-  "https://www.shareicon.net/data/256x256/2016/05/04/759956_food_512x512.png",
-  "https://www.shareicon.net/data/256x256/2016/05/04/759954_food_512x512.png",
-  "https://www.shareicon.net/data/256x256/2016/05/04/759906_food_512x512.png",
-  "https://www.shareicon.net/data/256x256/2016/05/04/759921_food_512x512.png"
-];
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff"
-  }
-});
-
-export default class Orders extends Component {
-  constructor(props) {
-    super(props);
-    // Initialize empty state here
-    this.state = {
-      orders: [],
-    };
-  }
-  componentWillMount() {
-    // It's best to use your api call on componentWillMount
-    this.getorders();
-  }
-
-  getorders() {
-    fetch("https://groc-api.herokuapp.com/orders")
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          orders: responseJson,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
+export default class TabsScrollableExample extends Component {
   render() {
-    if(this.state.orders.length === 0){
-      return(
-        <View style={styles.container}>
-        <BouncingPreloader
-          icons={icons}
-          leftDistance={-100}
-          rightDistance={-150}
-          speed={1000}
-        />
-      </View>);
-    }
-
-    else if(this.state.orders.length !=0){
     return (
       <Container>
-        <AppBar placeholder="Search Orders"
-        navigation={this.props.navigation}/>
+        <Header>
+        <Left>
+        <Button iconLeft onPress={()=>this.props.navigation.goBack()}>
+          <Icon name='arrow-back' />
+  
+        </Button>
+        </Left>
+        <Body>
+       
+        <Right ><Title>Groc......</Title></Right>
+        </Body>
+        </Header>
+        
         <Content>
-          {this.state.orders.map((order, i) => {
-            return (
-              <OrderCard
-              estimated_price={order.estimated_price}
-              ordered_items={order.ordered_items}
-              shop_id={order.shop_id}
-              navigation={this.props.navigation}
-              order_id={order.id}
-              />
-            );
-          })}
+        <Tabs renderTabBar={()=> <ScrollableTab />}>
+        <Tab heading="Pending Orders">
+            <  Orders_Pending/>
+          </Tab>
+          
+          <Tab heading="Accepted Orders">
+            < Orders_Accepted/>
+          </Tab>
+          <Tab heading="Rejected Orders">
+            <Orders_Rejected />
+          </Tab>
+          <Tab heading="Cancelled Orders">
+         <Orders_Cancelled />
+          </Tab>
+         
+        </Tabs>
         </Content>
         <BottomTab_1 
         navigation={this.props.navigation}
@@ -101,5 +47,4 @@ export default class Orders extends Component {
       </Container>
     );
   }
-}
 }

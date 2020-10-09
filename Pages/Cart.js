@@ -95,8 +95,11 @@ class Cart extends Component {
       children = children.concat(parsedJson_offer);
       parsedJson = children;
       console.log("children",children);
+      var filterded = children.filter(function (el){
+        return el != null;
+      });
       this.setState({
-        cart_items: parsedJson,
+        cart_items: filterded,
       });
       // console.log("Data Set");
       console.log("cart_items",this.state.cart_items);
@@ -107,16 +110,7 @@ class Cart extends Component {
 
 
 
-  getStoreData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem("shopArray");
-      var parsedJson = jsonValue != null ? JSON.parse(jsonValue) : null;
-      return parsedJson;
-    } catch (e) {
-      // error reading value
-    }
-  };
-
+  
   delete_items(index){
     console.log("index",index);
     
@@ -151,6 +145,7 @@ class Cart extends Component {
           <Content>
             {this.state.cart_items ? (
               this.state.cart_items.map((cart_item, i) => {
+                console.log(cart_item);
                 return (
                   <CartCard
                     image={cart_item.image}

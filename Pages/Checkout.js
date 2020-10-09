@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
         selected_payment:undefined,
         cart_items:null,
         shop_id:null,
+        user_id:null
       
     };
   }
@@ -65,6 +66,15 @@ const styles = StyleSheet.create({
 
   componentDidMount(){
     this.getData();
+    this.getuserdata();
+  }
+
+  getuserdata = async ()=>{
+    const data = await AsyncStorage.getItem("@userdata");
+    const user = JSON.parse(data);
+    this.setState({
+      user_id : user.id
+    })
   }
 
   getData = async () => {
@@ -77,10 +87,12 @@ const styles = StyleSheet.create({
       var parsedJson_offer = jsonValue_bycategory != null ? JSON.parse(jsonValue_byoffer) : null;
       var children = parsedJson.concat(parsedJson_category);
       children = children.concat(parsedJson_offer);
-      parsedJson = children;
-      console.log("children",children);
+      var filterded = children.filter(function (el){
+        return el != null;
+      });
+      console.log("children",filterded);
       this.setState({
-        cart_items: parsedJson,
+        cart_items: filterded,
       });
       const shop_id = await AsyncStorage.getItem("shop_id");
       this.setState({
@@ -102,7 +114,7 @@ const styles = StyleSheet.create({
 
   onValueChange_payment(value) {
     this.setState({
-      selected: value
+      selected_payment: value
     });
   }
 
@@ -148,7 +160,7 @@ const styles = StyleSheet.create({
                       iosHeader="Select your SIM"
                       iosIcon={<Icon name="arrow-down" />}
                       style={{ width: undefined }}
-                      selectedValue={this.state.selected}
+                      selectedValue={this.state.selected_payment}
                       onValueChange={this.onValueChange_payment.bind(this)}
                     >
                       <Picker.Item label="Cash on delivery" value="Cash on delivery" />
@@ -180,7 +192,7 @@ const styles = StyleSheet.create({
               const data={
                 "order_status": "Pending",
                 "order_type": "TAKEAWAY_COD_FixedPrice",
-                "user": "5f2d271172904b00fe911e45",
+                "user": this.state.user_id,
                 "shop": this.state.shop_id,
                 "ordered_items": ordered_items,
                    "price": total_price.toString()

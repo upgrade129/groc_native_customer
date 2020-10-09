@@ -17,7 +17,7 @@ export default function BottomTab({ navigation ,activeTabIcon}) {
             <Button
             vertical
             title="shops"
-            
+            onPress={()=>navigation.navigate("Shops")}
           >
             <Icon type="FontAwesome" name="store" />
             <Text>shops</Text>

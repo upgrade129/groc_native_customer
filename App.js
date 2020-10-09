@@ -20,6 +20,17 @@ import Checkout from "./Pages/Checkout";
 import Offers from "./Pages/Offers";
 import Combos from "./Pages/Combos";
 import test from "./Pages/test";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://groc-api.herokuapp.com/graphql",
+  cache: new InMemoryCache(),
+  onError: ({ networkError, graphQLErrors }) => {
+    console.log("graphQLErrors", graphQLErrors);
+    console.log("networkError", networkError);
+  },
+});
 
 
 const Stack = createStackNavigator();
@@ -61,14 +72,15 @@ export default class App extends Component {
 
   render() {
     return (
+      <ApolloProvider client={client}>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
           }}
         >
-          <Stack.Screen name="Orders" component={Orders} />
           <Stack.Screen name="Signin" component={Signin} />
+          <Stack.Screen name="Orders" component={Orders} />
           <Stack.Screen name="Checkout" component={Checkout} />
           <Stack.Screen name="Shop_dashboard" component={Shop_dashboard} />
           <Stack.Screen name="Home" component={Home} />
@@ -86,6 +98,7 @@ export default class App extends Component {
           
         </Stack.Navigator>
       </NavigationContainer>
+      </ApolloProvider>
     );
   }
 }

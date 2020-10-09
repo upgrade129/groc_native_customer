@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import ProductCard from "../Components/ProductCard";
-import BottomTab from "../Components/BottomTab";
+import BottomTab_1 from "../Components/BottomTab_1";
 import AppBar from "../Components/AppBar"
 
 export default class Profile extends Component {
