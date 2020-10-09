@@ -17,7 +17,7 @@ export default function CartCard(props) {
       </CardItem>
       <CardItem>
         <Right>
-          <Button transparent>
+          <Button transparent onPress={()=>props.remove_item(props.index)}>
             <Text>Remove From Cart</Text>
           </Button>
         </Right>

@@ -5,18 +5,32 @@ export default function AppBar(props) {
   return (
     <View>
       <Header>
-        <Left />
+        <Left>
+        <Button iconLeft onPress={()=>props.navigation.goBack()}>
+          <Icon name='arrow-back' />
+  
+        </Button>
+        </Left>
         <Body>
-          <Title>Groc</Title>
+       
+        <Right ><Title>Groc......</Title></Right>
         </Body>
-        <Right />
+        <Right>
+        <Button  >
+         
+          <Text>Become a customer</Text>
+        </Button>
+        </Right>
+        
       </Header>
+      
       <Header searchBar rounded>
         <Item>
           <Icon name="ios-search" />
           <Input placeholder={props.placeholder} />
         </Item>
       </Header>
+
     </View>
   );
 }

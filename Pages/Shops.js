@@ -5,8 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import OrderCard from "../Components/OrderCard";
-import BottomTab_1 from "../Components/BottomTab_1";
+import BottomTab from "../Components/BottomTab";
 import AppBar from "../Components/AppBar"
+import BottomTab_1 from "../Components/BottomTab_1";
 
 import {
   
@@ -17,6 +18,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import BouncingPreloader from "react-native-bouncing-preloader";
+import Select_Shop from "../Components/select_shop";
 
 
 
@@ -38,12 +40,14 @@ const styles = StyleSheet.create({
   }
 });
 
+ 
+
 export default class Orders extends Component {
   constructor(props) {
     super(props);
     // Initialize empty state here
     this.state = {
-      orders: [],
+      shops: [],
     };
   }
   componentWillMount() {
@@ -52,11 +56,11 @@ export default class Orders extends Component {
   }
 
   getorders() {
-    fetch("https://groc-api.herokuapp.com/orders")
+    fetch("https://groc-api.herokuapp.com/shops")
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          orders: responseJson,
+          shops: responseJson,
         });
       })
       .catch((error) => {
@@ -65,7 +69,7 @@ export default class Orders extends Component {
   }
 
   render() {
-    if(this.state.orders.length === 0){
+    if(this.state.shops.length === 0){
       return(
         <View style={styles.container}>
         <BouncingPreloader
@@ -77,27 +81,47 @@ export default class Orders extends Component {
       </View>);
     }
 
-    else if(this.state.orders.length !=0){
+    else if(this.state.shops.length !=0){
     return (
       <Container>
-        <AppBar placeholder="Search Orders"
-        navigation={this.props.navigation}/>
+        <View>
+      <Header>
+        
+        
+       
+        <Title>Groc......</Title>
+        
+        
+        
+        
+      </Header>
+      
+      <Header searchBar rounded>
+        <Item>
+          <Icon name="ios-search" />
+          <Input placeholder="search shops" />
+        </Item>
+      </Header>
+
+    </View>
+
         <Content>
-          {this.state.orders.map((order, i) => {
+          {this.state.shops.map((shop, i) => {
             return (
-              <OrderCard
-              estimated_price={order.estimated_price}
-              ordered_items={order.ordered_items}
-              shop_id={order.shop_id}
+              <Select_Shop
               navigation={this.props.navigation}
-              order_id={order.id}
+              shop_name={shop.shop_name}
+              shop_image={shop.image}
+              shop_ratings={shop.ratings}
+              shop_id={shop.id}
               />
             );
           })}
         </Content>
+        
         <BottomTab_1 
         navigation={this.props.navigation}
-        activeTabIcon = "orders" />
+        activeTabIcon = "shop" />
       </Container>
     );
   }

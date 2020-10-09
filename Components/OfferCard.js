@@ -10,6 +10,7 @@ export default class PickerPlaceholderExample extends Component {
       name:this.props.name,
       quantity:this.props.quantity,
       mrp_price:this.props.mrp_price,
+      offer_price:this.props.offer_price,
       unit:this.props.unit,
       id:this.props.id,
       item_added:{},
@@ -35,6 +36,10 @@ export default class PickerPlaceholderExample extends Component {
                 <Text>{this.state.name}</Text>
                 <Text note>
                   Price:{this.state.mrp_price}/{this.state.quantity}
+                  {this.state.unit}
+                </Text>
+                <Text note>
+                  Offer Price:{this.state.offer_price}/{this.state.quantity}
                   {this.state.unit}
                 </Text>
               </Body>
@@ -85,7 +90,7 @@ export default class PickerPlaceholderExample extends Component {
                 var data= {
                   "image": this.state.image,
                   "name": this.state.name,
-                  "price": this.state.mrp_price,
+                  "price": this.state.offer_price,
                   "id": this.state.id,
                   "quantity": this.state.selected
                 }
@@ -110,7 +115,11 @@ export default class PickerPlaceholderExample extends Component {
               <Body>
                 <Text>{this.state.name}</Text>
                 <Text note>
-                  Price:{this.state.price}/{this.state.quantity}
+                  Price:{this.state.mrp_price}/{this.state.quantity}
+                  {this.state.unit}
+                </Text>
+                <Text note>
+                  Offer Price:{this.state.offer_price}/{this.state.quantity}
                   {this.state.unit}
                 </Text>
               </Body>
@@ -161,7 +170,7 @@ export default class PickerPlaceholderExample extends Component {
                 this.state.item_added = {
                   "image": this.state.image,
                   "name": this.state.name,
-                  "price": this.state.mrp_price,
+                  "price": this.state.offer_price,
                   "id": this.state.id,
                   "quantity": this.state.selected
                 }
@@ -186,6 +195,10 @@ export default class PickerPlaceholderExample extends Component {
                 <Text>{this.state.name}</Text>
                 <Text note>
                   Price:{this.state.mrp_price}/{this.state.quantity}
+                  {this.state.unit}
+                </Text>
+                <Text note>
+                  Offer Price:{this.state.offer_price}/{this.state.quantity}
                   {this.state.unit}
                 </Text>
               </Body>
@@ -233,7 +246,7 @@ export default class PickerPlaceholderExample extends Component {
                 this.state.item_added = {
                   "image": this.state.image,
                   "name": this.state.name,
-                  "price": this.state.mrp_price,
+                  "price": this.state.offer_price,
                   "id": this.state.id,
                   "quantity": this.state.selected
                 }
@@ -260,6 +273,10 @@ export default class PickerPlaceholderExample extends Component {
                 <Text>{this.state.name}</Text>
                 <Text note>
                   Price:{this.state.mrp_price}/{this.state.quantity}
+                  {this.state.unit}
+                </Text>
+                <Text note>
+                  Offer Price:{this.state.offer_price}/{this.state.quantity}
                   {this.state.unit}
                 </Text>
               </Body>
@@ -305,7 +322,7 @@ export default class PickerPlaceholderExample extends Component {
                 this.state.item_added = {
                   "image": this.state.image,
                   "name": this.state.name,
-                  "price": this.state.mrp_price,
+                  "price": this.state.offer_price,
                   "id": this.state.id,
                   "quantity": this.state.selected
                 }

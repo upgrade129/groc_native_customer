@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import 'react-native-gesture-handler';
-import {  Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,  CardItem,  Thumbnail,} from "native-base";
+import {  Container,  Header,  Title,  Content,  Footer,  FooterTab, Form,Label, Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,  CardItem,  Thumbnail,Textarea} from "native-base";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -13,45 +13,53 @@ export default class Profile extends Component {
     super(props);
     // Initialize empty state here
     this.state = {
-      products: [],
+     
     };
   }
-  componentWillMount() {
-    // It's best to use your api call on componentWillMount
-    this.getProducts();
-  }
+  
 
-  getProducts() {
-    fetch("https://groc-api.herokuapp.com/products")
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          products: responseJson,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+  
 
   render() {
     return (
       <Container>
+        <AppBar 
+          navigation={this.props.navigation}
+          />
         <Content>
-          {/* {this.state.products.map((product, i) => {
-            return (
-              <ProductCard
-                image={product.image}
-                name={product.name}
-                price={product.price}
-                quantity={product.quantity}
-                unit={product.unit}
-              />
-            );
-          })} */}
-          <Text>Welcome to profile!</Text>
+          <Form>
+            <Item inlineLabel >
+              <Label>Username</Label>
+              <Input />
+            </Item>
+            <Item stackedLabel>
+              <Label>Email</Label>
+              <Input />
+            </Item>
+            <Item >
+              <Label>Phone Number</Label>
+              <Input />
+            </Item>
+            <Item stackedLabel>
+              <Label>Address</Label>
+              <Textarea />
+            </Item>
+            <Item inlineLabel>
+              <Label>Refferal code</Label>
+              <input />
+            </Item>
+          </Form>
         </Content>
-        <BottomTab navigation={this.props.navigation}/>
+        <Button
+            full
+            success
+           
+            title="Open Modal">
+            <Text>Save detials</Text>
+          </Button>
+          <BottomTab_1 
+        navigation={this.props.navigation}
+        activeTabIcon = "profile" />
       </Container>
     );
   }

@@ -82,7 +82,7 @@ export default class Signin extends Component {
                         console.log('User token', response.data.jwt);
                         this.storeuserdata(response.data.user);
                         this.storejwt(response.data.jwt);
-                        this.props.navigation.navigate('Home');
+                        this.props.navigation.navigate('Shops');
               
                         // this.props.history.push("/new/url")
                         
@@ -90,7 +90,7 @@ export default class Signin extends Component {
                       .catch(error => {
                         // Handle error.
                         console.log('An error occurred:', error.response);
-                        this.props.navigation.navigate('Home');
+                        this.props.navigation.navigate('Shops');
                         
                         
                       });

@@ -65,11 +65,12 @@ class Cart extends Component {
     // Initialize empty state here
     this.state = {
       cart_items: null,
-      data: [],
+      data: [1,2],
     };
   }
   componentWillMount() {
     this.getData();
+    
   }
 
   storeShopArray=async(list)=>{
@@ -86,11 +87,19 @@ class Cart extends Component {
     try {
       const jsonValue = await AsyncStorage.getItem("local");
       var parsedJson = jsonValue != null ? JSON.parse(jsonValue) : null;
+      const jsonValue_bycategory = await AsyncStorage.getItem("local_category");
+      var parsedJson_category = jsonValue_bycategory != null ? JSON.parse(jsonValue_bycategory) : null;
+      const jsonValue_byoffer = await AsyncStorage.getItem("local_offer");
+      var parsedJson_offer = jsonValue_bycategory != null ? JSON.parse(jsonValue_byoffer) : null;
+      var children = parsedJson.concat(parsedJson_category);
+      children = children.concat(parsedJson_offer);
+      parsedJson = children;
+      console.log("children",children);
       this.setState({
         cart_items: parsedJson,
       });
       // console.log("Data Set");
-      console.log(parsedJson);
+      console.log("cart_items",this.state.cart_items);
     } catch (e) {
       // error reading value
     }
@@ -108,6 +117,20 @@ class Cart extends Component {
     }
   };
 
+  delete_items(index){
+    console.log("index",index);
+    
+    
+    // var deleted_list=this.state.cart_items;
+    // deleted_list.splice(index,1);
+    // this.setState({
+    //   cart_items: deleted_list,
+    // });
+    
+    // console.log("removed index",index);
+
+  }
+
   render() {
     if(this.state.cart_items === null){
       return(
@@ -123,6 +146,8 @@ class Cart extends Component {
     else if(this.state.cart_items.length != null){
       return (
         <Container>
+          <AppBar placeholder="Search Products"
+          navigation={this.props.navigation}/>
           <Content>
             {this.state.cart_items ? (
               this.state.cart_items.map((cart_item, i) => {
@@ -133,6 +158,8 @@ class Cart extends Component {
                     price={cart_item.price}
                     quantity={cart_item.quantity}
                     unit={cart_item.unit}
+                    index={i}
+                    remove_item={this.delete_items}
                   />
                 );
               })
@@ -145,12 +172,14 @@ class Cart extends Component {
             full
             success
             onPress={() => {
-                this.props.navigation.navigate("SelectShop");
+                this.props.navigation.navigate("Checkout");
+               
             }}
             title="Open Modal">
             <Text>Check Out</Text>
           </Button>
-          <BottomTab navigation={this.props.navigation} />
+          <BottomTab navigation={this.props.navigation} 
+          activeTabIcon = "cart"/>
         </Container>
       );
     }

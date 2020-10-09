@@ -23,20 +23,15 @@ export default function OrderCard(props) {
         </Left>
       </CardItem>
       <CardItem>
-        <Left>
-          <Button transparent>
-            <Text>Add To Cart</Text>
-          </Button>
-        </Left>
-        <Body>
-          <Button transparent>
-            <Icon active name="chatbubbles" />
-            <Text>4 Comments</Text>
-          </Button>
-        </Body>
+        
+       
         <Right>
-          <Button transparent>
-            <Text>Add To Cart</Text>
+          <Button transparent onPress={()=>{
+            props.navigation.navigate("test",{
+              id:props.order_id
+            })
+          }}>
+            <Text>View Order</Text>
           </Button>
         </Right>
       </CardItem>

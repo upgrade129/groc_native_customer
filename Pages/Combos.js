@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import 'react-native-gesture-handler';
-import {  Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item, Picker, Input,  Segment,  Card, Form, CardItem,  Thumbnail,} from "native-base";
+import {  Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card, Form, CardItem,  Thumbnail, Root} from "native-base";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProductCard from "../Components/ProductCard";
+import ProductCard_category from "../Components/ProductCard_category";
 import BottomTab from "../Components/BottomTab";
 import AppBar from "../Components/AppBar";
 import AsyncStorage from '@react-native-community/async-storage';
@@ -17,9 +18,11 @@ import {
   TouchableOpacity
 } from "react-native";
 import BouncingPreloader from "react-native-bouncing-preloader";
+import OfferCard from "../Components/OfferCard";
+import ComboCard from "../Components/combocard";
 
-
-var list=[];
+var id ="";
+var list_offer=[];
 const icons = [
   "https://www.shareicon.net/data/256x256/2016/05/04/759946_bar_512x512.png",
   "https://www.shareicon.net/data/256x256/2016/05/04/759908_food_512x512.png",
@@ -38,7 +41,21 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Home extends Component {
+export default function ProductsByCategory({ route, navigation }) {
+   
+    
+    
+    
+    return(
+        <ProductsByCategoryClass 
+        
+        navigation={navigation}
+       
+        />
+    )
+}  
+
+ class ProductsByCategoryClass extends Component {
   constructor(props) {
     super(props);
     // Initialize empty state here
@@ -46,16 +63,15 @@ export default class Home extends Component {
       products: [],
       selected_products:[],
       loading:true,
-      category:"ALL",
-      shop_id:"",
-      
+      shop_id:""
     };
   }
-
+  
+  
   storelist=async(list)=>{
     try {
         const jsonValue = JSON.stringify(list);
-        await AsyncStorage.setItem('local', jsonValue)
+        await AsyncStorage.setItem('local_offer', jsonValue)
         console.log("a stored");
       } catch (e) {
         // saving error
@@ -67,6 +83,7 @@ export default class Home extends Component {
   componentWillMount() {
     // It's best to use your api call on componentWillMount
     this.getshop_id();
+    
     
   }
 
@@ -88,7 +105,7 @@ export default class Home extends Component {
   getshop_id = async () => {
     try {
       const shop_id = await AsyncStorage.getItem("shop_id");
-      
+      id=shop_id;
       this.setState({
         shop_id: shop_id,
       });
@@ -96,7 +113,7 @@ export default class Home extends Component {
     } catch (e) {
       // error reading value
     }
-    var url="https://groc-api.herokuapp.com/products?shop.id="+this.state.shop_id;
+    var url = "https://groc-api.herokuapp.com/combos?shop.id="+this.state.shop_id;
     console.log(url);
     fetch(url)
       .then((response) => response.json())
@@ -108,18 +125,14 @@ export default class Home extends Component {
       .catch((error) => {
         console.error(error);
       });
-  }
+  };
+
+
+
 
   getselected_items(val){
-      list.push(val);
-       console.log("sucessfully added",list);
-  }
-
-  onValueChange2(value) {
-    this.setState({
-      category: value
-    });
-    
+      list_offer.push(val);
+       console.log("sucessfully added",list_offer);
   }
 
   render() {
@@ -139,93 +152,64 @@ export default class Home extends Component {
     else if(this.state.products.length !=0){
       return (
         <Container>
-          <AppBar placeholder="Search Products"
-          navigation={this.props.navigation}
-          />
-          
-          <Item picker>
-              <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="arrow-down" />}
-                style={{ width: undefined }}
-                placeholder="Select your SIM"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
-                selectedValue={this.state.category}
-                onValueChange={this.onValueChange2.bind(this)}
-              >
-                <Picker.Item label="ALL" value="ALL" />
-                <Picker.Item label="Vegetables" value="Vegetables" />
-                <Picker.Item label="Fruits" value="Fruits" />
-                <Picker.Item label="Debit Card" value="Debit Card" />
-                <Picker.Item label="Credit Card" value="Credit Card" />
-                <Picker.Item label="Net Banking" value="Net Banking" />
-              </Picker>
-            </Item>
-          <Content>
-
-            {this.state.products.map((product, i) => {
-
-              if("ALL"==this.state.category){
-                return (
-                  <ProductCard
-                    image={product.image}
-                    name={product.name}
-                    mrp_price={product.mrp_price}
-                    quantity={product.quantity}
-                    unit={product.unit}
-                    id={product.id}
-                    added_items={this.getselected_items}
-                  />
-                )
-              }
-              else if(product.category==this.state.category){
-                return (
-                  <ProductCard
-                    image={product.image}
-                    name={product.name}
-                    mrp_price={product.mrp_price}
-                    quantity={product.quantity}
-                    unit={product.unit}
-                    id={product.id}
-                    added_items={this.getselected_items}
-                  />
-              );
             
-            }
+          <AppBar placeholder="Search Products"
+          navigation={this.props.navigation}/>
+          <Content>
+          {console.log("map",this.state.products)}
+            {
+            this.state.products.map((product, i) => {
+              
+              return (
+                <ComboCard
+                  image={product.image}
+                  name={product.name}
+                  mrp_price={product.original_price}
+                  offer_price={product.discounted_price}
+                  combo_items={product.combo_items}
+                  quantity={product.quantity}
+                  unit={product.unit}
+                  id={product.id}
+                  added_items={this.getselected_items}
+                  
+                />
+              );
             })}
           </Content>
+          
           <Footer>
         <FooterTab>
-          
-          <Button
-          vertical
-          title="Dashboard"
-          onPress={() => {
-            this.props.navigation.navigate("Shop_dashboard")
-            this.storelist(list);
-          }}
-        >
-        <Icon type="FontAwesome" name="paper-plane" />
-          <Text>Dashboard</Text>
-        </Button>
         <Button
             vertical
-            active
-            title="all products"
             
+            title="Go to Home"
+            onPress={() => {
+              this.props.navigation.navigate("Shop_dashboard");
+              this.storelist(list_offer);}}
           >
-            <Icon type="FontAwesome" name="home" />
-            <Text>All products</Text>
+            <Icon type="FontAwesome" name="paper-plane" />
+            <Text>Dashboard</Text>
           </Button>
           <Button
             vertical
+            title="Go to Home"
+            onPress={() =>{ 
+              this.props.navigation.navigate("Home",
+              );
+              this.storelist(list_offer);}}
+          >
+            <Icon type="FontAwesome" name="home" />
+            <Text>All Products</Text>
+          </Button>
+          <Button
+            vertical
+            
             title="Go to Cart"
             onPress={() => {
               this.props.navigation.navigate('Cart');
-              console.log("bottomTab",list);
+              console.log("bottomTab",list_offer);
               // localStorage.setItem("local",JSON.stringify(list));
-              this.storelist(list);
+              this.storelist(list_offer);
               
               
             }}
@@ -236,20 +220,21 @@ export default class Home extends Component {
           
           <Button
             vertical
-            title="Go to Profile"
-            onPress={() =>{
-               this.props.navigation.navigate("Offers")
-            this.storelist(list);}}
+            title="Go to offers"
+            onPress={() =>{ 
+              this.props.navigation.navigate("Offers");
+              this.storelist(list_offer);
+            }}
           >
             <Icon type="FontAwesome" name="user" />
             <Text>Offers</Text>
           </Button>
           <Button
             vertical
-            title="Go to Profile"
-            onPress={() =>{
-               this.props.navigation.navigate("Combos")
-            this.storelist(list);}}
+            active
+            title="Go to combos"
+            onPress={() => {this.props.navigation.navigate("Combo");
+            this.storelist(list_offer);}}
           >
             <Icon type="FontAwesome" name="user" />
             <Text>Combos</Text>

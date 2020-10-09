@@ -110,7 +110,7 @@ export default class PickerPlaceholderExample extends Component {
               <Body>
                 <Text>{this.state.name}</Text>
                 <Text note>
-                  Price:{this.state.price}/{this.state.quantity}
+                  Price:{this.state.mrp_price}/{this.state.quantity}
                   {this.state.unit}
                 </Text>
               </Body>
