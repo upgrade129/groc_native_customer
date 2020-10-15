@@ -22,10 +22,15 @@ import {
 } from "native-base";
 import { InputAccessoryView, Alert } from "react-native";
 
-export default function ViewOrderHeader({ username, price }) {
+export default function ViewOrderHeader({ username, price,navigation }) {
   return (
     <Header>
+      <Left><Button iconLeft onPress={()=>navigation.goBack()}>
+          <Icon name='arrow-back' />
+  
+        </Button></Left>
       <Body>
+      
         <Text
           style={{
             fontSize: 20,

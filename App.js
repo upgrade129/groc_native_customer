@@ -19,9 +19,20 @@ import ProductsByCategory from "./Pages/ProductsByCategory";
 import Checkout from "./Pages/Checkout";
 import Offers from "./Pages/Offers";
 import Combos from "./Pages/Combos";
-import test from "./Pages/test";
+import OrderView from "./Pages/OrderView";
+import Orders_accepted from "./Pages/Orders_Accepted";
+import Orders_cancelled from "./Pages/Orders_cancelled";
+import Orders_pending from "./Pages/Orders_pending";
+import Orders_Rejected from "./Pages/Orders_Rejected";
+import Edit_profile from "./Pages/Edit_profile";
+import Forgetpass from "./Pages/Forgetpass";
+
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client";
+// import MapActivity from "./Pages/MapActivity";
+
+
+
 
 const client = new ApolloClient({
   uri: "https://groc-api.herokuapp.com/graphql",
@@ -79,21 +90,30 @@ export default class App extends Component {
             headerShown: false,
           }}
         >
+          {/* <Stack.Screen name="MapActivity" component={MapActivity} /> */}
+          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="Edit_profile" component={Edit_profile} />
           <Stack.Screen name="Signin" component={Signin} />
+          <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Orders" component={Orders} />
           <Stack.Screen name="Checkout" component={Checkout} />
           <Stack.Screen name="Shop_dashboard" component={Shop_dashboard} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Cart" component={CartStackScreen} />
-          <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="SelectShop" component={SelectShop} />
           <Stack.Screen name="Shops" component={Shops} />
           <Stack.Screen name="select_shop" component={select_shop} />
           <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
           <Stack.Screen name="Offers" component={Offers} />
           <Stack.Screen name="Combos" component={Combos} />
-          <Stack.Screen name="test" component={test} />
+          <Stack.Screen name="OrderView" component={OrderView} />
+          <Stack.Screen name="Orders_accepted" component={Orders_accepted}/>
+          <Stack.Screen name="Orders_cancelled" component={Orders_cancelled}/>
+          <Stack.Screen name="Orders_pending " component={Orders_pending }/>
+          <Stack.Screen name="Orders_Rejected" component={Orders_Rejected}/>
+          <Stack.Screen name="Forgetpass" component={Forgetpass}/>
+
+          
 
           
         </Stack.Navigator>

@@ -27,7 +27,7 @@ export default function OrderCard(props) {
        
         <Right>
           <Button transparent onPress={()=>{
-            props.navigation.navigate("test",{
+            props.navigation.navigate("OrderView",{
               id:props.order_id
             })
           }}>

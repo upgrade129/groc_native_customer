@@ -18,7 +18,7 @@ export default class Signup extends Component {
           dist:"",
           state:"",
           coun:"",
-          pincode:""
+          referral_code:""
         };
       }
 
@@ -34,7 +34,7 @@ export default class Signup extends Component {
             <CardItem >
               <Body>
               <Item regular>
-                    <Icon active name='ios-man' style={{color: '#687373'}} />
+                    <Icon active name='ios-man  ' style={{color: '#687373'}} />
                     <Input placeholder='Username' placeholderTextColor="#687373" onChangeText={(text) => this.setState({name: text})} />
               </Item>
               </Body>
@@ -71,6 +71,54 @@ export default class Signup extends Component {
                 </Item>
               </Body>
             </CardItem>
+            <CardItem >
+              <Body>
+              <Item regular>
+                    <Icon active name='ios-man' style={{color: '#687373'}} />
+                    <Input placeholder='Door Number' placeholderTextColor="#687373" onChangeText={(text) => this.setState({door_no: text})} />
+              </Item>
+              </Body>
+            </CardItem>
+            <CardItem >
+              <Body>
+              <Item regular>
+                    <Icon active name='ios-mail' style={{color: '#687373'}} />
+                    <Input placeholder='Street Name' placeholderTextColor="#687373" onChangeText={(text) => this.setState({street_name: text})} keyboardType="email-address" />
+              </Item>
+              </Body>
+            </CardItem>
+            <CardItem >
+              <Body>
+              <Item regular>
+                    <Icon active name='ios-keypad' style={{color: '#687373'}} />
+                    <Input placeholder='Town (or) City' placeholderTextColor="#687373" onChangeText={(text) => this.setState({town: text})} />
+              </Item>
+              </Body>
+            </CardItem>
+            <CardItem >
+              <Body>
+              <Item regular>
+                    <Icon active name='ios-mail' style={{color: '#687373'}} />
+                    <Input placeholder='State' placeholderTextColor="#687373" onChangeText={(text) => this.setState({state: text})} keyboardType="email-address" />
+              </Item>
+              </Body>
+            </CardItem>
+            <CardItem >
+              <Body>
+              <Item regular>
+                    <Icon active name='ios-keypad' style={{color: '#687373'}} />
+                    <Input placeholder='Country' placeholderTextColor="#687373" onChangeText={(text) => this.setState({coun: text})} />
+              </Item>
+              </Body>
+            </CardItem>
+            <CardItem >
+              <Body>
+              <Item regular>
+                    <Icon active name='ios-keypad' style={{color: '#687373'}} />
+                    <Input placeholder='Referral Code' placeholderTextColor="#687373" onChangeText={(text) => this.setState({referral_code: text})} />
+              </Item>
+              </Body>
+            </CardItem>
             <CardItem footer bordered>
             <View>
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate('Signin')}>
@@ -86,6 +134,16 @@ export default class Signup extends Component {
                       email: this.state.email,
                       password: this.state.pass,
                       phone_number: this.state.phone,
+                    "referral_code":this.state.referral_code,
+                    "address": {
+                      "door_no": this.state.door_no,
+                      "street":this.state.street_name,
+                      "town_city_village":this.state.town,
+                      "district": this.state.dist,
+                      "state": this.state.state,
+                      "country": this.state.coun,
+                      
+                    },
                     })
                     .then(response => {
                       console.log('Well done!');

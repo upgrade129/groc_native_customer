@@ -110,6 +110,7 @@ export default class Orders extends Component {
               />
             );
           })}
+          
         </Content>
         
       </Container>

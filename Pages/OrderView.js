@@ -24,7 +24,6 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import { StyleSheet } from "react-native";
-// import ViewOrdersBottomTab from "../components/Orders/ViewOrdersBottomTab";
 import ViewOrderHeader from "../Components/Orders/ViewOrderHeader";
 import ViewOrderMessageViewer from "../components/Orders/ViewOrderMessageViewer";
 import ViewOrderOrderedItemsViewer from "../components/Orders/ViewOrderOrderedItemsViewer";
@@ -32,10 +31,12 @@ import ViewOrderCardComponent from "../components/Orders/ViewOrderCardComponent"
 import ViewOrderLoading from "../components/Orders/ViewOrderLoading";
 import ErrorOccured from "../components/Orders/ErrorOccured";
 import { useQuery, gql } from "@apollo/client";
+import { useLinkProps } from "@react-navigation/native";
 
 function test({ route, navigation }) {
   const { from } = route.params;
   const { id } = route.params;
+  
   console.log(id);
   const GET_SINGLE_ORDER = gql`
     query GET_SINGLE_ORDER($orderID: ID!) {
@@ -111,6 +112,7 @@ function test({ route, navigation }) {
       <ViewOrderHeader
         username={data.order.user.username}
         price={data.order.price}
+        navigation={navigation}
       />
       <Content>
         <ViewOrderCardComponent

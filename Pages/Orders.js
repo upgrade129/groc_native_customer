@@ -26,17 +26,21 @@ export default class TabsScrollableExample extends Component {
         <Content>
         <Tabs renderTabBar={()=> <ScrollableTab />}>
         <Tab heading="Pending Orders">
-            <  Orders_Pending/>
+            <  Orders_Pending
+              navigation={this.props.navigation}/>
           </Tab>
           
           <Tab heading="Accepted Orders">
-            < Orders_Accepted/>
+            < Orders_Accepted
+            navigation={this.props.navigation}/>
           </Tab>
           <Tab heading="Rejected Orders">
-            <Orders_Rejected />
+            <Orders_Rejected 
+            navigation={this.props.navigation}/>
           </Tab>
           <Tab heading="Cancelled Orders">
-         <Orders_Cancelled />
+         <Orders_Cancelled 
+         navigation={this.props.navigation}/>
           </Tab>
          
         </Tabs>

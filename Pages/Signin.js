@@ -67,6 +67,15 @@ export default class Signin extends Component {
                     <Text>Not Having Account?</Text>
                   </TouchableOpacity>
                 </View>
+                </CardItem>
+                <CardItem footer bordered>
+                <View>
+                  <TouchableOpacity onPress={(e)=>this.props.navigation.navigate('Forgetpass')}>
+                    <Text>Forget Password</Text>
+                  </TouchableOpacity>
+                </View>
+                </CardItem>
+                <CardItem footer bordered>
                  <View style={{ paddingLeft: 20 }}>
                     <Button onPress={() => {
                       console.log("username",this.state.email);
