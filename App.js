@@ -27,6 +27,7 @@ import Orders_Rejected from "./Pages/Orders_Rejected";
 import Edit_profile from "./Pages/Edit_profile";
 import Forgetpass from "./Pages/Forgetpass";
 
+
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client";
 // import MapActivity from "./Pages/MapActivity";
@@ -58,6 +59,7 @@ export default class App extends Component {
   componentWillMount() {
     // It's best to use your api call on componentWillMount
     this.getProducts();
+    
   }
 
   getProducts() {
@@ -91,9 +93,9 @@ export default class App extends Component {
           }}
         >
           {/* <Stack.Screen name="MapActivity" component={MapActivity} /> */}
+          <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="Edit_profile" component={Edit_profile} />
-          <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Orders" component={Orders} />
           <Stack.Screen name="Checkout" component={Checkout} />
@@ -122,3 +124,45 @@ export default class App extends Component {
     );
   }
 }
+
+const express = require("express");
+const webpush = require("web-push");
+const bodyParser = require("body-parser");
+const path = require("path");
+
+const app = express();
+
+// Set static path
+app.use(express.static(path.join(__dirname, "client")));
+
+app.use(bodyParser.json());
+
+const publicVapidKey =
+  "BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTB5rPziBqNx1qIo";
+const privateVapidKey = "3KzvKasA2SoCxsp0iIG_o9B0Ozvl1XDwI63JRKNIWBM";
+
+webpush.setVapidDetails(
+  "mailto:test@test.com",
+  publicVapidKey,
+  privateVapidKey
+);
+
+// Subscribe Route
+app.post("/subscribe", (req, res) => {
+  // Get pushSubscription object
+  const subscription = req.body;
+
+  // Send 201 - resource created
+  res.status(201).json({});
+
+  // Create payload
+  const payload = JSON.stringify({ title: "Push Test" });
+
+  // Pass object into sendNotification
+  webpush
+    .sendNotification(subscription, payload)
+    .catch(err => console.error(err));
+});
+
+
+
