@@ -4,8 +4,7 @@ import { Container, Header, Content, Button, Text , Form, Item, Input, Label ,Ic
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const publicVapidKey =
-  "BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTB5rPziBqNx1qIo";
+
 
 export default class Signin extends Component {
     constructor(props){
@@ -85,7 +84,7 @@ export default class Signin extends Component {
                     <Button onPress={() => {
                       console.log("username",this.state.email);
                       axios
-                      .post('https://groc-api.herokuapp.com/auth/local', {
+                      .post('https://strapi-grock.herokuapp.com/auth/local', {
                         identifier: this.state.email,
                         password: this.state.pass,
                       })

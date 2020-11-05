@@ -129,7 +129,7 @@ export default class Signup extends Component {
                <Button onPress={() => {
                   console.log("name",this.state.name);
                   axios
-                    .post('https://groc-api.herokuapp.com/auth/local/register', {
+                    .post('https://strapi-grock.herokuapp.com/auth/local/register', {
                       username: this.state.name,
                       email: this.state.email,
                       password: this.state.pass,

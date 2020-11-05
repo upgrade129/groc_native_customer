@@ -16,7 +16,7 @@ export default class PickerPlaceholderExample extends Component {
       id:this.props.id,
       item_added:{},
       addtocart:this.props.added_items,
-      button_text:"Add to cart",
+      
     };
   }
 
@@ -101,7 +101,7 @@ export default class PickerPlaceholderExample extends Component {
                 this.state.addtocart(this.state.item_added);
                 this.setState({button_text:'Product Added'});
             }}>
-                <Text>{this.state.button_text}</Text>
+                <Text>Buy Now</Text>
               </Button>
             </Right>
           </CardItem>

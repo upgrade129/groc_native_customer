@@ -52,11 +52,11 @@ export default class Orders extends Component {
   }
   componentWillMount() {
     // It's best to use your api call on componentWillMount
-    this.getorders();
+    this.getshops();
   }
 
-  getorders() {
-    fetch("https://groc-api.herokuapp.com/shops")
+  getshops() {
+    fetch("https://strapi-grock.herokuapp.com/shops")
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({

@@ -92,11 +92,11 @@ export default class Home extends Component {
       this.setState({
         shop_id: shop_id,
       });
-      console.log("asyn",shop_id);
+      console.log("asyn",this.state.shop_id);
     } catch (e) {
       // error reading value
     }
-    var url="https://groc-api.herokuapp.com/products?shop.id="+this.state.shop_id;
+    var url="https://strapi-grock.herokuapp.com/shop-products?shop.id="+this.state.shop_id;
     console.log(url);
     fetch(url)
       .then((response) => response.json())

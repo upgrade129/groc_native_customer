@@ -32,7 +32,6 @@ const BannerHeight = 260;
 // import "../styles/banner.css";
 
 
-var list=[];
 const icons = [
   "https://www.shareicon.net/data/256x256/2016/05/04/759946_bar_512x512.png",
   "https://www.shareicon.net/data/256x256/2016/05/04/759908_food_512x512.png",
@@ -69,8 +68,8 @@ export default function Shop_dashboard({ route, navigation }) {
    
   const { shop_name } = route.params;
   const { otherParam } = route.params;
+
   
-  console.log("cat",{shop_name});
   return(
       <Dashboard 
       shop_name={shop_name}
@@ -83,9 +82,51 @@ export default function Shop_dashboard({ route, navigation }) {
     super(props);
     // Initialize empty state here
     this.state = {
-      
+      categories:[],
+      shop_id:null,
+      sub_categories :[],
+      sub_products : []
       
     };
+  }
+
+  
+  componentDidMount(){
+    this.getshop_id();
+    this.getcategories();
+  }
+
+  getshop_id = async()=>{
+    try {
+      await AsyncStorage.setItem('level', 0);
+      const shop_id = await AsyncStorage.getItem("shop_id");
+      this.setState({
+        shop_id: shop_id,
+      });
+      
+    } catch (e) {
+      // error reading value
+    }
+  }
+
+  getcategories(){
+    fetch("https://strapi-grock.herokuapp.com/categories?level=0")
+      .then((response) => response.json())
+      .then((responseJson) => {
+        var list=[];
+        responseJson.map((category,i) => {
+           list.push({"category_id":category.id,
+                        "level" : category.level,
+                      "category_name" : category.name}) ;
+        });
+        this.setState({
+          categories: list,
+        });
+        console.log("categories",this.state.categories);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   
@@ -96,26 +137,28 @@ export default function Shop_dashboard({ route, navigation }) {
         </View>
     );
 }  
+
+
  
 
   render() {
 
-    // if(this.state.products.length === 0){
-    //   return(
-    //     <View style={styles.container}>
-    //     <BouncingPreloader
-    //       icons={icons}
-    //       leftDistance={-100}
-    //       rightDistance={-150}
-    //       speed={1000}
-    //     />
-    //   </View>);
-    // }
+    if(this.state.categories.length === 0){
+      return(
+        <View style={styles.container}>
+        <BouncingPreloader
+          icons={icons}
+          leftDistance={-100}
+          rightDistance={-150}
+          speed={1000}
+        />
+      </View>);
+    }
 
-    // else if(this.state.products.length !=0){
+    else if(this.state.categories.length !=0){
       return (
         <Container>
-        <AppBar placeholder="Search shops"
+        <AppBar placeholder="Search category"
         navigation={this.props.navigation}
         shop_name={this.props.shop_name}/>
         <Content>
@@ -132,64 +175,56 @@ export default function Shop_dashboard({ route, navigation }) {
                 </Carousel>
             </View>
 
-            <Grid>
-          <Col style={{ backgroundColor: '#635DB7', height: 150 }}>
-              <Card>
-            <CardItem>
-              <Left>
-                <Thumbnail source={{uri: 'https://picsum.photos/200/300'}} />
-                <Body>
-                  <Text>vegitable</Text>
-                  <Button full danger 
-                  onPress={() => {
-                    /* 1. Navigate to the Details route with params */
-                    this.props.navigation.navigate('ProductsByCategory', {
-                        category:"Vegetables",
-                        shop_name:this.props.shop_name,
-                      otherParam: 'anything you want here',
-                    });
-                  }}>
-                    <Text>View products</Text>
-                </Button>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image source={{uri: 'Imagr uri'}} style={{height: 200, width: null, flex: 1}}/>
-            </CardItem>
+            {this.state.categories.map((item,i) => {
+                return(
+                  <Card>
+        <CardItem>
+          <Left>
+            <Thumbnail source={{ uri:"" }} />
+            <Body>
+              <Text>{item.category_name}</Text>
+            </Body>
+          </Left>
+        </CardItem>
+        <CardItem>
+          <Right>
+            <Button  onPress={()=>{
+               var url="https://strapi-grock.herokuapp.com/categories?id="+item.category_id;
+               console.log("url",url);
+             fetch(url)
+               .then((response) => response.json())
+               .then((responseJson) => {
+                 this.setState({
+                  sub_categories: responseJson[0].sub_categories,
+                  sub_products : responseJson[0].featured_products
+                 });
+                 
+                 console.log("sub_categories",this.state.sub_categories);
+                 console.log("featured products",this.state.sub_products);
+               // console.log(this.state.categories[0].sub_categories);
+               this.props.navigation.navigate("ProductsByCategory",
+            {category_id:item.category_id,
+              level : 1,
+            categories : this.state.sub_categories,
+          products : this.state.sub_products}); 
+               })
+               .catch((error) => {
+                 console.error(error);
+               });
+              
+          }
+  
+            }>
+              <Text>Buy from this category</Text>
+            </Button>
+          </Right>
+        </CardItem>
+      </Card>
+                );
+            })}
+
             
-          </Card>
-          </Col>
-          <Col style={{ backgroundColor: '#00CE9F', height: 150 }}><Card>
-            <CardItem>
-              <Left>
-                <Thumbnail source={{uri: 'https://picsum.photos/200/300'}} />
-                <Body>
-                  <Text>Fruits</Text>
-                  <Button full danger 
-                  onPress={() => {
-                    /* 1. Navigate to the Details route with params */
-                    this.props.navigation.navigate('ProductsByCategory', {
-                        category:"Fruits",
-                        shop_name:this.props.shop_name,
-                      otherParam: 'anything you want here',
-                    });
-                  }}>
-                    <Text>View products</Text>
-                </Button>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image source={{uri: 'Imagr uri'}} style={{height: 200, width: null, flex: 1}}/>
-            </CardItem>
-            
-          </Card></Col>
-        </Grid>
-        <Grid>
-          <Col style={{ backgroundColor: '#00CE9F', height: 150 }}></Col>
-          <Col style={{ backgroundColor: '#635DB7', height: 150 }}></Col>
-        </Grid>
+        
         </Content>
         <BottomTab navigation={this.props.navigation}
         activeTabIcon = "dashboard"/>
@@ -199,7 +234,8 @@ export default function Shop_dashboard({ route, navigation }) {
 
     }
     }
+  }
 
     
-
+        
 

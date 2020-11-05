@@ -70,8 +70,8 @@ export default function ProductsByCategory({ route, navigation }) {
   storelist=async(list)=>{
     try {
         const jsonValue = JSON.stringify(list);
-        await AsyncStorage.setItem('local_offer', jsonValue)
-        console.log("a stored");
+        await AsyncStorage.setItem('offer', jsonValue)
+        console.log("offer items stored");
       } catch (e) {
         // saving error
       }
@@ -112,7 +112,7 @@ export default function ProductsByCategory({ route, navigation }) {
     } catch (e) {
       // error reading value
     }
-    var url = "https://groc-api.herokuapp.com/products?on_offer=true&shop.id="+this.state.shop_id;
+    var url = "https://strapi-grock.herokuapp.com/shop-products?on_offer=true&shop.id="+this.state.shop_id;
     console.log(url);
     fetch(url)
       .then((response) => response.json())

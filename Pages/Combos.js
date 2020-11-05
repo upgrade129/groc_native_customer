@@ -66,40 +66,12 @@ export default function ProductsByCategory({ route, navigation }) {
       shop_id:""
     };
   }
-  
-  
-  storelist=async(list)=>{
-    try {
-        const jsonValue = JSON.stringify(list);
-        await AsyncStorage.setItem('local_offer', jsonValue)
-        console.log("a stored");
-      } catch (e) {
-        // saving error
-      }
-    }
-
-    
-  
+ 
   componentWillMount() {
     // It's best to use your api call on componentWillMount
     this.getshop_id();
     
     
-  }
-
-  updateData = async (value) => {
-    try {
-      var cart_items = await AsyncStorage.getItem('@cart_items')
-      cart_items=JSON.parse(cart_items);
-      const jsonValue = JSON.stringify(value)
-      cart_items.push(jsonValue);
-      cart_items=JSON.stringify(cart_items);
-      await AsyncStorage.setItem('@cart_items', cart_items)
-      console.log("Data stored");
-    } catch (e) {
-      // saving error
-      console.log(e)
-    }
   }
 
   getshop_id = async () => {
@@ -113,7 +85,7 @@ export default function ProductsByCategory({ route, navigation }) {
     } catch (e) {
       // error reading value
     }
-    var url = "https://groc-api.herokuapp.com/combos?shop.id="+this.state.shop_id;
+    var url = "https://strapi-grock.herokuapp.com/combos?shop.id="+this.state.shop_id;
     console.log(url);
     fetch(url)
       .then((response) => response.json())
@@ -185,7 +157,7 @@ export default function ProductsByCategory({ route, navigation }) {
             title="Go to Home"
             onPress={() => {
               this.props.navigation.navigate("Shop_dashboard");
-              this.storelist(list_offer);}}
+              }}
           >
             <Icon type="FontAwesome" name="paper-plane" />
             <Text>Dashboard</Text>
@@ -196,7 +168,7 @@ export default function ProductsByCategory({ route, navigation }) {
             onPress={() =>{ 
               this.props.navigation.navigate("Home",
               );
-              this.storelist(list_offer);}}
+              }}
           >
             <Icon type="FontAwesome" name="home" />
             <Text>All Products</Text>
@@ -208,8 +180,7 @@ export default function ProductsByCategory({ route, navigation }) {
             onPress={() => {
               this.props.navigation.navigate('Cart');
               console.log("bottomTab",list_offer);
-              // localStorage.setItem("local",JSON.stringify(list));
-              this.storelist(list_offer);
+              
               
               
             }}
@@ -223,7 +194,7 @@ export default function ProductsByCategory({ route, navigation }) {
             title="Go to offers"
             onPress={() =>{ 
               this.props.navigation.navigate("Offers");
-              this.storelist(list_offer);
+              
             }}
           >
             <Icon type="FontAwesome" name="user" />
@@ -234,7 +205,7 @@ export default function ProductsByCategory({ route, navigation }) {
             active
             title="Go to combos"
             onPress={() => {this.props.navigation.navigate("Combo");
-            this.storelist(list_offer);}}
+            }}
           >
             <Icon type="FontAwesome" name="user" />
             <Text>Combos</Text>

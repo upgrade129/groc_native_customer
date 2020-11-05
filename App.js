@@ -93,17 +93,17 @@ export default class App extends Component {
           }}
         >
           {/* <Stack.Screen name="MapActivity" component={MapActivity} /> */}
+          <Stack.Screen name="Shops" component={Shops} />
+          <Stack.Screen name="Shop_dashboard" component={Shop_dashboard} />
           <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="Edit_profile" component={Edit_profile} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Orders" component={Orders} />
           <Stack.Screen name="Checkout" component={Checkout} />
-          <Stack.Screen name="Shop_dashboard" component={Shop_dashboard} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Cart" component={CartStackScreen} />
           <Stack.Screen name="SelectShop" component={SelectShop} />
-          <Stack.Screen name="Shops" component={Shops} />
           <Stack.Screen name="select_shop" component={select_shop} />
           <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
           <Stack.Screen name="Offers" component={Offers} />
@@ -124,45 +124,5 @@ export default class App extends Component {
     );
   }
 }
-
-const express = require("express");
-const webpush = require("web-push");
-const bodyParser = require("body-parser");
-const path = require("path");
-
-const app = express();
-
-// Set static path
-app.use(express.static(path.join(__dirname, "client")));
-
-app.use(bodyParser.json());
-
-const publicVapidKey =
-  "BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTB5rPziBqNx1qIo";
-const privateVapidKey = "3KzvKasA2SoCxsp0iIG_o9B0Ozvl1XDwI63JRKNIWBM";
-
-webpush.setVapidDetails(
-  "mailto:test@test.com",
-  publicVapidKey,
-  privateVapidKey
-);
-
-// Subscribe Route
-app.post("/subscribe", (req, res) => {
-  // Get pushSubscription object
-  const subscription = req.body;
-
-  // Send 201 - resource created
-  res.status(201).json({});
-
-  // Create payload
-  const payload = JSON.stringify({ title: "Push Test" });
-
-  // Pass object into sendNotification
-  webpush
-    .sendNotification(subscription, payload)
-    .catch(err => console.error(err));
-});
-
 
 
