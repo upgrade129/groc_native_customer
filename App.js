@@ -16,6 +16,7 @@ import select_shop from './Components/select_shop';
 import AppBar from "./Components/AppBar";
 import Shop_dashboard from "./Pages/Shop_dashboard";
 import ProductsByCategory from "./Pages/ProductsByCategory";
+import ProductsByCategory1 from "./Pages/ProductsByCategory1";
 import Checkout from "./Pages/Checkout";
 import Offers from "./Pages/Offers";
 import Combos from "./Pages/Combos";
@@ -93,9 +94,9 @@ export default class App extends Component {
           }}
         >
           {/* <Stack.Screen name="MapActivity" component={MapActivity} /> */}
+          <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Shops" component={Shops} />
           <Stack.Screen name="Shop_dashboard" component={Shop_dashboard} />
-          <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="Edit_profile" component={Edit_profile} />
           <Stack.Screen name="Profile" component={Profile} />
@@ -106,6 +107,7 @@ export default class App extends Component {
           <Stack.Screen name="SelectShop" component={SelectShop} />
           <Stack.Screen name="select_shop" component={select_shop} />
           <Stack.Screen name="ProductsByCategory" component={ProductsByCategory} />
+          <Stack.Screen name="ProductsByCategory1" component={ProductsByCategory1} />
           <Stack.Screen name="Offers" component={Offers} />
           <Stack.Screen name="Combos" component={Combos} />
           <Stack.Screen name="OrderView" component={OrderView} />

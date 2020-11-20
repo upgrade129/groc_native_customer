@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {   Container,  Header,  Title,  Content,  Footer,  FooterTab,  Button,  Left,  Right,  Body,  Icon,  Text,  Item,  Input,  Segment,  Card,  CardItem,  Thumbnail,Form,Picker} from "native-base";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class PickerPlaceholderExample extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class PickerPlaceholderExample extends Component {
       combo_items:this.props.combo_items,
       unit:this.props.unit,
       id:this.props.id,
-      item_added:{},
+      item_added:[],
       addtocart:this.props.added_items,
       
     };
@@ -25,6 +26,17 @@ export default class PickerPlaceholderExample extends Component {
       selected: value
     });
   }
+
+  storelist=async(list)=>{
+    console.log("hii");
+    try {
+        const jsonValue = JSON.stringify(list);
+        await AsyncStorage.setItem('local_combo', jsonValue)
+        console.log("a stored");
+      } catch (e) {
+        // saving error
+      }
+    }
   render() {
    
       return (
@@ -98,8 +110,10 @@ export default class PickerPlaceholderExample extends Component {
                   "quantity": this.state.selected
                 }
                 console.log("selected-items",this.state.item_added);
-                this.state.addtocart(this.state.item_added);
+                this.storelist(this.state.item_added);
                 this.setState({button_text:'Product Added'});
+                this.state.addtocart(this.state.item_added);
+                this.props.navigation.navigate("Checkout");
             }}>
                 <Text>Buy Now</Text>
               </Button>

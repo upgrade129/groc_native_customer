@@ -22,7 +22,7 @@ import OfferCard from "../Components/OfferCard";
 import ComboCard from "../Components/combocard";
 
 var id ="";
-var list_offer=[];
+var list_combo=[];
 const icons = [
   "https://www.shareicon.net/data/256x256/2016/05/04/759946_bar_512x512.png",
   "https://www.shareicon.net/data/256x256/2016/05/04/759908_food_512x512.png",
@@ -99,12 +99,13 @@ export default function ProductsByCategory({ route, navigation }) {
       });
   };
 
-
-
+  
+  
 
   getselected_items(val){
-      list_offer.push(val);
-       console.log("sucessfully added",list_offer);
+      list_combo.push(val);
+       console.log("sucessfully added",list_combo);
+       
   }
 
   render() {
@@ -143,6 +144,7 @@ export default function ProductsByCategory({ route, navigation }) {
                   unit={product.unit}
                   id={product.id}
                   added_items={this.getselected_items}
+                  navigation={this.props.navigation}
                   
                 />
               );

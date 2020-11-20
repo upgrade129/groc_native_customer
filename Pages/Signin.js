@@ -103,7 +103,7 @@ export default class Signin extends Component {
                       .catch(error => {
                         // Handle error.
                         console.log('An error occurred:', error.response);
-                        this.props.navigation.navigate('Shops');
+                        // this.props.navigation.navigate('Shops');
                         
                         
                       });

@@ -99,6 +99,10 @@ export default function Shop_dashboard({ route, navigation }) {
   getshop_id = async()=>{
     try {
       await AsyncStorage.setItem('level', 0);
+      await AsyncStorage.setItem('local_category', "[]");
+      await AsyncStorage.setItem('offer', "[]");
+      await AsyncStorage.setItem('local', "[]");
+      await AsyncStorage.setItem('local_combo', "[]");
       const shop_id = await AsyncStorage.getItem("shop_id");
       this.setState({
         shop_id: shop_id,
@@ -189,29 +193,12 @@ export default function Shop_dashboard({ route, navigation }) {
         <CardItem>
           <Right>
             <Button  onPress={()=>{
-               var url="https://strapi-grock.herokuapp.com/categories?id="+item.category_id;
-               console.log("url",url);
-             fetch(url)
-               .then((response) => response.json())
-               .then((responseJson) => {
-                 this.setState({
-                  sub_categories: responseJson[0].sub_categories,
-                  sub_products : responseJson[0].featured_products
-                 });
-                 
-                 console.log("sub_categories",this.state.sub_categories);
-                 console.log("featured products",this.state.sub_products);
-               // console.log(this.state.categories[0].sub_categories);
-               this.props.navigation.navigate("ProductsByCategory",
-            {category_id:item.category_id,
-              level : 1,
-            categories : this.state.sub_categories,
-          products : this.state.sub_products}); 
-               })
-               .catch((error) => {
-                 console.error(error);
-               });
-              
+
+this.props.navigation.navigate("ProductsByCategory",
+{category_id:item.category_id,
+  level : 1,
+}); 
+      
           }
   
             }>

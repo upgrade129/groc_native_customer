@@ -113,6 +113,7 @@ export default class Home extends Component {
   getselected_items(val){
       list.push(val);
        console.log("sucessfully added",list);
+       
   }
 
   onValueChange2(value) {

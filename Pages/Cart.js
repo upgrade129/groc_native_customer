@@ -94,8 +94,11 @@ class Cart extends Component {
       const jsonValue_bycategory = await AsyncStorage.getItem("local_category");
       var parsedJson_category = jsonValue_bycategory != null ? JSON.parse(jsonValue_bycategory) : null;
       console.log("category",parsedJson_category);
-      var children = parsedJson.concat(parsedJson_category);
-      children = children.concat(parsedJson_offer);
+      const jsonValue_bycombo = await AsyncStorage.getItem("local_combo");
+      var parsedJson_combo = jsonValue_bycombo != null ? JSON.parse(jsonValue_bycombo) : null;
+      console.log("combo",parsedJson_combo);
+      var children = [...parsedJson_offer,... parsedJson,...parsedJson_category,...parsedJson_combo];
+      
       
       console.log("children",children);
       var filterded = children.filter(function (el){

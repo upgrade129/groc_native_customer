@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     this.state = {
         selected: undefined,
         selected_payment:undefined,
-        cart_items:null,
+        cart_items:[],
         shop_id:null,
         user_id:null
       
@@ -84,9 +84,12 @@ const styles = StyleSheet.create({
       const jsonValue_bycategory = await AsyncStorage.getItem("local_category");
       var parsedJson_category = jsonValue_bycategory != null ? JSON.parse(jsonValue_bycategory) : null;
       const jsonValue_byoffer = await AsyncStorage.getItem("local_offer");
-      var parsedJson_offer = jsonValue_bycategory != null ? JSON.parse(jsonValue_byoffer) : null;
+      var parsedJson_offer = jsonValue_byoffer != null ? JSON.parse(jsonValue_byoffer) : null;
+      const jsonValue_bycombo = await AsyncStorage.getItem("local_combo");
+      var parsedJson_combo = jsonValue_bycombo != null ? JSON.parse(jsonValue_bycombo) : null;
       var children = parsedJson.concat(parsedJson_category);
       children = children.concat(parsedJson_offer);
+      children = children.concat(parsedJson_combo);
       var filterded = children.filter(function (el){
         return el != null;
       });
@@ -199,7 +202,7 @@ const styles = StyleSheet.create({
               }
                 console.log("data",data);
                 axios
-                .post('https://groc-api.herokuapp.com/orders',data)
+                .post('https://strapi-grock.herokuapp.com/orders',data)
                 .then(response => {
                   // Handle success.
                   console.log("order posted ")

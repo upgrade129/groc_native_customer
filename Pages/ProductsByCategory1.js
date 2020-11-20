@@ -77,7 +77,6 @@ export default function ProductsByCategory({ route, navigation }) {
   
   
   storelist=async(list)=>{
-   
     try {
       console.log(list);
         const old_items = await AsyncStorage.getItem("local_category");
@@ -93,7 +92,6 @@ export default function ProductsByCategory({ route, navigation }) {
       }
     }
 
-    
   
   componentWillMount() {
     // It's best to use your api call on componentWillMount
@@ -105,7 +103,6 @@ export default function ProductsByCategory({ route, navigation }) {
     
   }
   getshop_id = async () => {
-
     try {
       const shop_id = await AsyncStorage.getItem("shop_id");
       
@@ -198,7 +195,6 @@ export default function ProductsByCategory({ route, navigation }) {
       </Header>
 
     </View>
-
           <Separator bordered>
             <Text>SUB CATEGRIES</Text>
           </Separator>
@@ -226,7 +222,7 @@ export default function ProductsByCategory({ route, navigation }) {
                   console.log("item",item);
                   this.storelist(list_category);
                   
-                  this.props.navigation.push("ProductsByCategory1",
+                  this.props.navigation.push("ProductsByCategory",
                {category_id:item.id,
                  level : this.state.level+1,
                }); 
